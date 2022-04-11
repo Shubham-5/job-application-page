@@ -1,0 +1,21 @@
+.header-section {
+    background-color: white;
+    width: 100vw;
+    padding: 30px 30px;
+}
+
+.wrapper h2 {
+    font: normal 400 36px/1.4 Lato;
+    color: #515357;
+    margin: 17.5px 0;
+    text-transform: none;
+    letter-spacing: 0px;
+}
+
+.categories-item {
+    display: inline-block;
+    margin-right: 10px;
+    color: #808080;
+    font: normal 700 14px Lato;
+    letter-spacing: 1px;
+}

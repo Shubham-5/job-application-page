@@ -1,0 +1,63 @@
+.application-label {
+    font-size: 16px;
+    line-height: 1.4;
+    vertical-align: middle;
+    width: 100%;
+}
+
+li {
+    list-style: none;
+}
+
+input {
+    width: 100%;
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+    height: 40px;
+    padding: 4px 4px 4px 15px;
+    line-height: 1.4;
+    color: #515357;
+    border-color: #e2e2e2;
+    transition: 1px solid #e3e4e6 150ms, background 150ms;
+    font: normal 400 16px/1.8 Lato;
+}
+
+input:focus,
+input::selection,
+input:active {
+    outline: none;
+    border: 1px solid #515357;
+}
+
+.application-label,
+.application-field {
+    margin: 17px 0px;
+}
+
+.required {
+    display: inline-block;
+    color: #ff794f;
+    margin-left: 4px;
+    font-size: 9px;
+    padding-bottom: 0px;
+    position: absolute;
+}
+
+@media screen and (min-width: 800px) {
+    .application-label {
+        width: 210px;
+        display: inline-block;
+    }
+    .application-field {
+        padding-left: 15px;
+        width: 489px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .application-label,
+    .application-field {
+        display: inline-block;
+    }
+}

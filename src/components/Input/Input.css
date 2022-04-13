@@ -44,20 +44,99 @@ input:active {
     position: absolute;
 }
 
+.visible-resume .hidden-inp {
+    opacity: 0;
+    width: 230px;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.visible-resume {
+    position: relative;
+    margin-right: 15px;
+    padding-left: 41px;
+    text-decoration: none;
+    background: #ebecf0;
+    color: #9696a2 !important;
+    border: 1px solid hsl(228, 8%, 88%);
+    border-radius: 3px;
+    padding: 10px 15px;
+}
+
+.visible-resume:hover {
+    background-color: #d0d0db;
+}
+
+.custom-inp {
+    padding-bottom: 20px;
+    margin-top: 20px;
+}
+
+textarea {
+    resize: vertical;
+    width: 55vw;
+    height: 130px;
+    border: 1px solid hsl(229, 13%, 51%);
+    border-radius: 3px;
+    padding-bottom: 40px;
+}
+
+textarea::placeholder {
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+.application-label .full-width {
+    padding-left: 0;
+    width: 55vw;
+}
+
+.application-label .text {
+    vertical-align: bottom;
+    width: 50vw;
+}
+
+.application-field span {
+    line-height: 1.33;
+    color: #9696a2;
+    overflow: hidden;
+    letter-spacing: 2px;
+}
+
 @media screen and (min-width: 800px) {
     .application-label {
         width: 210px;
-        display: inline-block;
     }
     .application-field {
         padding-left: 15px;
         width: 489px;
     }
-}
-
-@media screen and (min-width: 800px) {
     .application-label,
     .application-field {
         display: inline-block;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    label,
+    input {
+        width: 100%;
+    }
+    .textarea,
+    textarea {
+        padding-top: 10px;
+        resize: vertical;
+        width: 88vw;
+        height: 130px;
+    }
+    .application-label .full-width {
+        padding-left: 0;
+        width: 88vw;
+    }
+    .full-width .text {
+        padding-left: 0;
+        width: 88vw;
     }
 }

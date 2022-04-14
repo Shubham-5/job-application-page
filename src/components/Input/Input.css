@@ -23,6 +23,11 @@ input {
     font: normal 400 16px/1.8 Lato;
 }
 
+.default-lable svg {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
 input:focus,
 input::selection,
 input:active {
@@ -81,11 +86,15 @@ textarea {
     border: 1px solid hsl(229, 13%, 51%);
     border-radius: 3px;
     padding-bottom: 40px;
-}
-
-textarea::placeholder {
     padding-left: 15px;
     padding-top: 15px;
+}
+
+textarea:focus,
+textarea::selection,
+textarea:active {
+    outline: none;
+    border: 1px solid #515357;
 }
 
 .application-label .full-width {

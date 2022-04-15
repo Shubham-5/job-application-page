@@ -107,33 +107,29 @@ const ApplicationForm = () => {
           veteran: data.veteran,
         });
 
-        try {
-          const uploadToStrapi = async (data: any) => {
-            await fetch("http://localhost:1337/api/applications", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                resume: data.Resume[0],
-                fullname: data.FullName,
-                email: data.Email,
-                phone: data.Phone,
-                company: data.CurrentCompany,
-                linkedin: data.LinkedInURL,
-                twitter: data.TwitterURL,
-                github: data.GithubURL,
-                portfolio: data.PortfolioURL,
-                otherwebsite: data.OtherWebsite,
-                pronouns: data.pronouns,
-                addinfo: data.additionInfo,
-                gender: data.gender,
-              }),
-            });
-          };
-        } catch {
-          (err: Object) => console.log(err);
-        }
+        const uploadToStrapi = async (data: any) => {
+          await fetch("http://localhost:1337/api/applications", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              resume: data.Resume[0],
+              fullname: data.FullName,
+              email: data.Email,
+              phone: data.Phone,
+              company: data.CurrentCompany,
+              linkedin: data.LinkedInURL,
+              twitter: data.TwitterURL,
+              github: data.GithubURL,
+              portfolio: data.PortfolioURL,
+              otherwebsite: data.OtherWebsite,
+              pronouns: data.pronouns,
+              addinfo: data.additionInfo,
+              gender: data.gender,
+            }),
+          });
+        };
 
         const getResumeURL = async () => {
           getDownloadURL(upload.snapshot.ref).then(async (url) => {
@@ -144,6 +140,7 @@ const ApplicationForm = () => {
           });
         };
 
+        uploadToStrapi(data);
         getResumeURL();
         alert("Submit Sucessfull");
       } catch (error) {

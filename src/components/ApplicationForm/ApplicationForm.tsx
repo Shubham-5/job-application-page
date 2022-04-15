@@ -108,29 +108,33 @@ const ApplicationForm = () => {
         });
 
         const uploadToStrapi = async (data: any) => {
-          await fetch("http://localhost:1337/api/applications", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              resume: data.Resume[0].name,
-              fullname: data.FullName,
-              email: data.Email,
-              phone: data.Phone,
-              company: data.CurrentCompany,
-              linkedin: data.LinkedInURL,
-              twitter: data.TwitterURL,
-              github: data.GithubURL,
-              portfolio: data.PortfolioURL,
-              otherwebsite: data.OtherWebsite,
-              pronouns: data.pronouns,
-              addinfo: data.additionInfo,
-              gender: data.gender,
-            }),
-          });
-        };
+          const sendData = {
+            fullname: data.FullName,
+            email: data.Email,
+            phone: data.Phone,
+            company: data.CurrentCompany,
+            linkedin: data.LinkedInURL,
+            twitter: data.TwitterURL,
+            github: data.GithubURL,
+            portfolio: data.PortfolioURL,
+            otherwebsite: data.OtherWebsite,
+            pronouns: data.pronouns,
+            addinfo: data.additionInfo,
+            gender: data.gender,
+          };
+          const file = data.Resume[0];
 
+          const request = new XMLHttpRequest();
+          const formData = new FormData();
+
+          formData.append("files.file", file, file.name);
+
+          formData.append("data", JSON.stringify(sendData));
+
+          request.open("POST", `http://localhost:1337/api/applications`);
+
+          request.send(formData);
+        };
         const getResumeURL = async () => {
           getDownloadURL(upload.snapshot.ref).then(async (url) => {
             console.log(`resume url ${url}`);

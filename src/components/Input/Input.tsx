@@ -2,6 +2,7 @@ import "./Input.css";
 import React, { useState } from "react";
 import { IoAttach } from "react-icons/io5";
 import { FormState } from "react-hook-form";
+import { string } from "yup";
 
 interface IFormInput {
   Resume: Object;
@@ -36,7 +37,11 @@ const Input = ({
 
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
     if (e.currentTarget.files && e.currentTarget.files[0]) {
-      setResumeName(e.currentTarget.files[0].name);
+      if (e.currentTarget.files[0].size > 50000000) {
+        alert("file size greater than 5 MB");
+      } else {
+        setResumeName(e.currentTarget.files[0].name);
+      }
     }
   }
 
@@ -46,6 +51,10 @@ const Input = ({
     switch (name) {
       case "Resume":
         obj.required = { value: true, message: "this field is required" };
+        obj.pattern = {
+          value: /[0-9]+[.][0-9A-Za-z]+[.][Pp][Dd][Ff]/,
+          message: "only pdf file allowed",
+        };
         return obj;
 
       case "FullName":
@@ -76,7 +85,6 @@ const Input = ({
             /((https?:\/\/)?((www|\w\w)\.)?linkedin\.com\/)((([\w]{2,3})?)|([^/]+\/(([\w|\d-&#?=])+\/?){1,}))$/,
           message: "invalid linkedin Url",
         };
-        obj.required = { value: true, message: "this field is required" };
         return obj;
 
       default:
@@ -155,13 +163,6 @@ const Input = ({
                     {...register("Resume", getValidation(name))}
                     onChange={(e) => handleOnChange(e)}
                   />
-                  {formState?.errors
-                    ? [`${name}`] && (
-                        <small className='text-danger'>
-                          {formState.errors[`${name}`]?.message}
-                        </small>
-                      )
-                    : null}
                 </a>
               ) : (
                 <input

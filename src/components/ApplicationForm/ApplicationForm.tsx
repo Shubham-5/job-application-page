@@ -1,14 +1,11 @@
 import "./ApplicationForm.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Input from "../Input";
 import SelectBox from "../SelectBox";
 
 import { useForm, SubmitHandler } from "react-hook-form";
-
-//ts-ignore
-import ReCAPTCHA from "react-google-recaptcha";
-
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 
 import {
@@ -66,6 +63,16 @@ const ApplicationForm = () => {
   } = useForm<IFormInput>();
 
   const [isCaptcha, setCaptcha] = useState(false);
+  const [token, setToken] = useState<string[]>([]);
+  const captchaRef = useRef<HCaptcha>(null);
+
+  const onExpire = () => {
+    console.log("hCaptcha Token Expired");
+  };
+
+  const onError = (err: any) => {
+    console.log(`hCaptcha Error: ${err}`);
+  };
 
   const onErrors = (errors: Object) => {
     console.log(errors);
@@ -115,11 +122,15 @@ const ApplicationForm = () => {
         console.log(error);
       }
     }
-    if (isCaptcha === true) {
+    if (token) {
       applicationUpload(data);
     } else {
       alert("Captcha Not Verified..");
     }
+  };
+
+  const onLoad = (): void => {
+    captchaRef.current?.execute();
   };
 
   return (
@@ -242,13 +253,16 @@ const ApplicationForm = () => {
           </div>
 
           <div className='captcha'>
-            <ReCAPTCHA
-              sitekey='6Le-JEQfAAAAAD0r2SFM1s_5-bbnVoLjTLsGwKe2'
-              onChange={() => {
-                setCaptcha(true);
-              }}
+            <HCaptcha
+              sitekey='10000000-ffff-ffff-ffff-000000000001'
+              onVerify={(string) => setToken([string])}
+              onError={onError}
+              onExpire={onExpire}
+              ref={captchaRef}
             />
-            {!isCaptcha && <div>Verification Required</div>}
+            {token && (
+              <small className='text-danger'>Verification Required</small>
+            )}
           </div>
 
           <div className='submit-btn-container'>

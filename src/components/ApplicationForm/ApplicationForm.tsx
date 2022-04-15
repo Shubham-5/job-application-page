@@ -114,7 +114,7 @@ const ApplicationForm = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              resume: data.Resume[0],
+              resume: data.Resume[0].name,
               fullname: data.FullName,
               email: data.Email,
               phone: data.Phone,

@@ -1,8 +1,3 @@
-/* ekeys are used to uniquely identify your site(s). We've already generated your first one: 3e3bb4cf-567f-43f0-93a0-6b60991b98db
-You can specify captcha related settings per sitekey, such as challenge difficulty and preferred content based on site topics..
-2
-A secret is used to verify your hCaptcha account: 0x4EC05a96Ae5584E58A056206BdC069D46B61950D */
-
 .application-label {
     font-size: 16px;
     line-height: 1.4;
@@ -43,6 +38,7 @@ input:active {
 .application-label,
 .application-field {
     margin: 17px 0px;
+    position: relative;
 }
 
 .required {
@@ -52,6 +48,14 @@ input:active {
     font-size: 9px;
     padding-bottom: 0px;
     position: absolute;
+}
+
+.hidden-inp {
+    width: 100%;
+}
+
+.text-danger {
+    display: block;
 }
 
 .visible-resume .hidden-inp {
@@ -75,10 +79,6 @@ input:active {
     padding: 10px 15px;
 }
 
-.text-danger {
-    display: block;
-}
-
 .visible-resume:hover {
     background-color: #d0d0db;
 }
@@ -94,7 +94,6 @@ textarea {
     height: 130px;
     border: 1px solid hsl(229, 13%, 51%);
     border-radius: 3px;
-    padding-bottom: 40px;
     padding-left: 15px;
     padding-top: 15px;
 }

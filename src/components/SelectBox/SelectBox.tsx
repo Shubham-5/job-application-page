@@ -7,7 +7,7 @@ const SelectBox = ({ register }: { register: any }) => {
         <div className='application-field'>
           <div className='application-selectbox'>
             <select id='selectBox' {...register("gender", { required: true })}>
-              <option>Select...</option>
+              <option value=''>Select...</option>
               <option value='male'>Male</option>
               <option value='female'>Female</option>
               <option value='DeclineToSelfIdentify'>
@@ -22,7 +22,7 @@ const SelectBox = ({ register }: { register: any }) => {
         <div className='application-field'>
           <div className='application-selectbox'>
             <select id='selectBox' {...register("race", { required: true })}>
-              <option>Select...</option>
+              <option value=''>Select...</option>
               <option value='Hispanic or Latino'>Hispanic or Latino</option>
               <option value='White (Not Hispanic or Latino)'>
                 White (Not Hispanic or Latino)
@@ -55,7 +55,7 @@ const SelectBox = ({ register }: { register: any }) => {
         <div className='application-field'>
           <div className='application-selectbox'>
             <select id='selectBox' {...register("veteran", { required: true })}>
-              <option>Select...</option>
+              <option value=''>Select...</option>
               <option value='I am a veteran'>I am a veteran</option>
               <option value='I am not a veteran'>I am not a veteran</option>
               <option value='Decline to self identify'>

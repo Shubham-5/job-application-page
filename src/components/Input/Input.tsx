@@ -2,7 +2,6 @@ import "./Input.css";
 import React, { useState } from "react";
 import { IoAttach } from "react-icons/io5";
 import { FormState } from "react-hook-form";
-import { string } from "yup";
 
 interface IFormInput {
   Resume: Object;
@@ -15,7 +14,7 @@ interface IFormInput {
   PortfolioURL: String;
   OtherWebsite: String;
   pronouns: String;
-  additionalInfo: String;
+  additionInfo: String;
 }
 
 const Input = ({
@@ -24,14 +23,12 @@ const Input = ({
   name,
   isResume,
   formState,
-  customInput,
 }: {
   register: any;
   title: string;
   name: string;
   isResume: boolean;
   formState?: FormState<IFormInput>;
-  customInput: boolean;
 }) => {
   const [resumeName, setResumeName] = useState("");
 
@@ -50,7 +47,7 @@ const Input = ({
 
     switch (name) {
       case "Resume":
-        obj.required = { value: true, message: "this field is required" };
+        obj.required = { value: true, message: "Resume is required" };
         obj.pattern = {
           value: /[0-9]+[.][0-9A-Za-z]+[.][Pp][Dd][Ff]/,
           message: "only pdf file allowed",
@@ -58,8 +55,11 @@ const Input = ({
         return obj;
 
       case "FullName":
-        obj.required = { value: true, message: "this field is required" };
-        obj.minLength = { value: 10, message: "minimun character is 10" };
+        obj.required = { value: true, message: "Full name is required" };
+        obj.minLength = {
+          value: 10,
+          message: "minimun 10 character is required",
+        };
         return obj;
 
       case "Email":
@@ -67,7 +67,7 @@ const Input = ({
           value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
           message: "invalid email",
         };
-        obj.required = { value: true, message: "this field is required" };
+        obj.required = { value: true, message: "Email is required" };
         return obj;
 
       case "Phone":
@@ -76,7 +76,7 @@ const Input = ({
           message: "invalid phone number",
         };
         obj.minLength = { value: 13, message: "country code required" };
-        obj.required = { value: true, message: "this field is required" };
+        obj.required = { value: true, message: " Phone number is required" };
         return obj;
 
       case "LinkedinURL":
@@ -102,87 +102,50 @@ const Input = ({
   };
   return (
     <div>
-      {customInput ? (
-        <>
-          <li className='application-que custom-inp'>
-            <div className='application-label full-width text'>
-              <label>
-                <div className='text'>
-                  If you'd like, please share your pronouns with us.
-                </div>
-              </label>
-              <div className='application-field full-width'>
+      <li className='application-que'>
+        <label>
+          <div className='application-label'>
+            {title}
+            {req(name) && <span className='required'>✱</span>}
+          </div>
+          <div className='application-field'>
+            {isResume ? (
+              <a href='#' className='visible-resume'>
+                {resumeName ? (
+                  <span className='filename'>{resumeName}</span>
+                ) : (
+                  <span className='default-lable'>
+                    <IoAttach size={23} />
+                    ATTACH RESUME/CV
+                  </span>
+                )}
                 <input
-                  type={name}
-                  placeholder='Type your response'
-                  {...register("pronouns")}
-                />
-              </div>
-            </div>
-          </li>
-          <li className='application-que custom-inp'>
-            <div className='application-label full-width text'>
-              <label>
-                <div className='text'>
-                  <h4>ADDITIONAL INFORMATION</h4>
-                </div>
-              </label>
-              <div className='application-field full-width'>
-                <div className='textarea'>
-                  <textarea
-                    placeholder='Add a cover letter or anything else you want to share.'
-                    {...register("additionInfo", getValidation(name))}
-                  />
-                </div>
-              </div>
-            </div>
-          </li>
-        </>
-      ) : (
-        <li className='application-que'>
-          <label>
-            <div className='application-label'>
-              {title}
-              {req(name) && <span className='required'>✱</span>}
-            </div>
-            <div className='application-field'>
-              {isResume ? (
-                <a href='#' className='visible-resume'>
-                  {resumeName ? (
-                    <span className='filename'>{resumeName}</span>
-                  ) : (
-                    <span className='default-lable'>
-                      <IoAttach size={23} />
-                      ATTACH RESUME/CV
-                    </span>
-                  )}
-                  <input
-                    className='hidden-inp'
-                    type='file'
-                    name={name}
-                    {...register("Resume", getValidation(name))}
-                    onChange={(e) => handleOnChange(e)}
-                  />
-                </a>
-              ) : (
-                <input
-                  type={name}
+                  className='hidden-inp'
+                  type='file'
                   name={name}
-                  {...register(name, getValidation(name))}
+                  accept='application/pdf'
+                  {...register("Resume", getValidation(name))}
+                  onChange={(e) => handleOnChange(e)}
                 />
-              )}
+              </a>
+            ) : (
+              <input
+                type={name}
+                name={name}
+                {...register(name, getValidation(name))}
+              />
+            )}
 
-              {formState?.errors
-                ? [`${name}`] && (
-                    <small className='text-danger'>
-                      {formState.errors[`${name}`]?.message}
-                    </small>
-                  )
-                : null}
-            </div>
-          </label>
-        </li>
-      )}
+            {formState?.errors
+              ? [`${name}`] && (
+                  <small className='text-danger '>
+                    {formState.errors[`${name}`]?.message}
+                  </small>
+                )
+              : null}
+          </div>
+        </label>
+      </li>
     </div>
   );
 };

@@ -15,6 +15,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { db } from "../firebase/Firebase";
+import CustomInput from "../CustomInput";
 
 enum GenderEnum {
   male = "male",
@@ -65,13 +66,18 @@ const ApplicationForm = () => {
   const [isCaptcha, setCaptcha] = useState(false);
   const [token, setToken] = useState<string[]>([]);
   const captchaRef = useRef<HCaptcha>(null);
-
+  const handleCaptcha = (string: any) => {
+    setToken([string]);
+    setCaptcha(true);
+  };
   const onExpire = () => {
     console.log("hCaptcha Token Expired");
+    setCaptcha(false);
   };
 
   const onError = (err: any) => {
     console.log(`hCaptcha Error: ${err}`);
+    setCaptcha(false);
   };
 
   const onErrors = (errors: Object) => {
@@ -172,7 +178,6 @@ const ApplicationForm = () => {
             register={register}
             name={"Resume"}
             isResume={true}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -180,7 +185,6 @@ const ApplicationForm = () => {
             register={register}
             name={"FullName"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -188,7 +192,6 @@ const ApplicationForm = () => {
             register={register}
             name={"Email"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -196,7 +199,6 @@ const ApplicationForm = () => {
             register={register}
             name={"Phone"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -204,7 +206,6 @@ const ApplicationForm = () => {
             register={register}
             name={"CurrentCompany"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
 
@@ -214,7 +215,6 @@ const ApplicationForm = () => {
             register={register}
             name={"LinkedInURL"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -222,7 +222,6 @@ const ApplicationForm = () => {
             register={register}
             name={"TwitterURL"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -230,7 +229,6 @@ const ApplicationForm = () => {
             register={register}
             name={"GithubURL"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -238,7 +236,6 @@ const ApplicationForm = () => {
             register={register}
             name={"PortfolioURL"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
           <Input
@@ -246,17 +243,14 @@ const ApplicationForm = () => {
             register={register}
             name={"OtherWebsite"}
             isResume={false}
-            customInput={false}
             formState={formState}
           />
 
           <h4>PREFERRED PRONOUNS</h4>
-          <Input
-            title={"If you'd like, please share your pronouns with us."}
+          <CustomInput
+            title={"ADDITIONAL INFORMATION"}
             register={register}
-            name={"OtherWebsite"}
-            isResume={false}
-            customInput={true}
+            name={"additionInfo"}
             formState={formState}
           />
           <div className='wrapper'>
@@ -284,12 +278,12 @@ const ApplicationForm = () => {
           <div className='captcha'>
             <HCaptcha
               sitekey='10000000-ffff-ffff-ffff-000000000001'
-              onVerify={(string) => setToken([string])}
+              onVerify={(string) => handleCaptcha(string)}
               onError={onError}
               onExpire={onExpire}
               ref={captchaRef}
             />
-            {token && (
+            {!isCaptcha && (
               <small className='text-danger'>Verification Required</small>
             )}
           </div>
